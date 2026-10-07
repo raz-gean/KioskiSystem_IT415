@@ -2,9 +2,9 @@ import { formatCentavosAsPesos, sumCartCentavos } from '../lib/money';
 
 export default function PaymentMethodScreen({ state, dispatch }) {
   const methods = [
-    { key: 'cash', label: 'Cash' },
-    { key: 'qr', label: 'QR Payment' },
-    { key: 'card', label: 'Credit / Debit Card' },
+    { key: 'cash', label: 'Cash', icon: '💵', tint: 'bg-success/10 text-success' },
+    { key: 'qr', label: 'QR Payment', icon: '📱', tint: 'bg-primary/10 text-primary' },
+    { key: 'card', label: 'Credit / Debit Card', icon: '💳', tint: 'bg-accent/20 text-ink' },
   ];
 
   function choose(method) {
@@ -24,8 +24,14 @@ export default function PaymentMethodScreen({ state, dispatch }) {
             key={method.key}
             type="button"
             onClick={() => choose(method.key)}
-            className="rounded-xl border border-ink/10 bg-white p-6 text-center font-semibold shadow-sm"
+            className="flex flex-col items-center gap-3 rounded-xl border border-ink/10 bg-white p-6 text-center font-semibold shadow-sm transition active:scale-95 active:border-primary"
           >
+            <span
+              className={`flex h-12 w-12 items-center justify-center rounded-full text-2xl ${method.tint}`}
+              aria-hidden="true"
+            >
+              {method.icon}
+            </span>
             {method.label}
           </button>
         ))}
