@@ -44,7 +44,7 @@ export default function OrderScreen({ state, dispatch }) {
               key={product.id}
               type="button"
               onClick={() => dispatch({ type: 'ADD_ITEM', productId: product.id })}
-              className="rounded-xl border border-ink/10 bg-white p-4 text-left shadow-sm transition active:scale-95 active:border-primary"
+              className="group rounded-xl border border-ink/10 bg-white p-4 text-left shadow-sm transition active:scale-95 active:border-primary"
             >
               <div
                 className="flex h-14 w-14 items-center justify-center rounded-lg bg-accent/20 text-2xl"
@@ -66,28 +66,30 @@ export default function OrderScreen({ state, dispatch }) {
         ) : (
           <ul className="mt-4 space-y-3">
             {state.cart.map((line) => (
-              <li key={line.productId} className="flex items-center justify-between">
-                <div>
-                  <div>{line.name}</div>
+              <li key={line.productId} className="flex items-center justify-between gap-2">
+                <div className="min-w-0">
+                  <div className="truncate">{line.name}</div>
                   <div className="text-sm text-ink/60">
                     {formatCentavosAsPesos(line.unitPriceCentavos)} each
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex shrink-0 items-center gap-2">
                   <button
                     type="button"
                     aria-label={`Decrease ${line.name} quantity`}
                     onClick={() => dispatch({ type: 'DECREMENT_ITEM', productId: line.productId })}
-                    className="h-8 w-8 rounded-full bg-bg"
+                    className="h-8 w-8 rounded-full bg-bg font-semibold"
                   >
                     −
                   </button>
-                  <span>{line.quantity}</span>
+                  <span className="min-w-6 rounded-full bg-ink/5 px-2 text-center text-sm font-semibold">
+                    {line.quantity}
+                  </span>
                   <button
                     type="button"
                     aria-label={`Increase ${line.name} quantity`}
                     onClick={() => dispatch({ type: 'INCREMENT_ITEM', productId: line.productId })}
-                    className="h-8 w-8 rounded-full bg-accent"
+                    className="h-8 w-8 rounded-full bg-accent font-semibold"
                   >
                     +
                   </button>
@@ -107,14 +109,16 @@ export default function OrderScreen({ state, dispatch }) {
 
         <div className="mt-6 flex items-center justify-between font-semibold">
           <span>Total</span>
-          <span>{formatCentavosAsPesos(totalCentavos)}</span>
+          <span className="font-display text-xl text-primary">
+            {formatCentavosAsPesos(totalCentavos)}
+          </span>
         </div>
 
         <button
           type="button"
           disabled={state.cart.length === 0}
           onClick={() => dispatch({ type: 'GO_TO_STEP', step: 'review' })}
-          className="mt-4 w-full rounded-lg bg-primary py-3 font-semibold text-white disabled:opacity-40"
+          className="mt-4 w-full rounded-lg bg-primary py-3 font-semibold text-white transition active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100"
         >
           Proceed to Payment
         </button>
