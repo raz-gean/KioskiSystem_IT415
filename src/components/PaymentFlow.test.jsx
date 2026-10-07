@@ -12,6 +12,18 @@ function reachPaymentMethod() {
 }
 
 describe('payment improvements', () => {
+  it('requires a fresh cash amount after returning to payment selection', () => {
+    reachPaymentMethod();
+    fireEvent.click(screen.getByRole('button', { name: /^cash$/i }));
+    fireEvent.change(screen.getByLabelText(/amount paid/i), { target: { value: '200' } });
+    fireEvent.click(screen.getByRole('button', { name: /^back$/i }));
+    fireEvent.click(screen.getByRole('button', { name: /^cash$/i }));
+    expect(screen.getByLabelText(/amount paid/i)).toHaveValue(null);
+    fireEvent.click(screen.getByRole('button', { name: /pay now/i }));
+    expect(screen.getByText(/please enter a valid payment amount/i)).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /payment successful/i })).not.toBeInTheDocument();
+  });
+
   it('shows the total for all items and quantities when choosing payment', () => {
     reachPaymentMethod();
     expect(screen.getByText(/Amount due: ₱140\.00/)).toBeInTheDocument();

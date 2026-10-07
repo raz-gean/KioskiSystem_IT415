@@ -70,6 +70,18 @@ describe('GO_TO_STEP', () => {
   });
 });
 
+describe('SELECT_PAYMENT_METHOD', () => {
+  it.each(['cash', 'qr', 'card'])('clears stale cash amount and error when selecting %s', (method) => {
+    let state = appReducer(initialState, { type: 'ADD_ITEM', productId: 'coffee' });
+    state = { ...state, paymentMethod: 'cash', cashAmountPaidCentavos: 20000, cashError: 'Old error' };
+    const result = appReducer(state, { type: 'SELECT_PAYMENT_METHOD', method });
+    expect(result.cashAmountPaidCentavos).toBeNull();
+    expect(result.cashError).toBeNull();
+    expect(result.paymentMethod).toBe(method);
+    expect(result.cart).toEqual(state.cart);
+  });
+});
+
 describe('SUBMIT_CASH_PAYMENT', () => {
   function stateWithCoffeeAndMethod() {
     let state = appReducer(initialState, { type: 'ADD_ITEM', productId: 'coffee' }); // 4500
