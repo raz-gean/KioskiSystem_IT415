@@ -46,16 +46,28 @@ export default function OrderScreen({ state, dispatch }) {
               onClick={() => dispatch({ type: 'ADD_ITEM', productId: product.id })}
               className="group rounded-xl border border-ink/10 bg-white p-4 text-left shadow-sm transition active:scale-95 active:border-primary lg:rounded-2xl lg:p-6"
             >
-              <div
-                className="flex h-14 w-14 items-center justify-center rounded-lg bg-accent/20 text-2xl lg:h-20 lg:w-20 lg:rounded-xl lg:text-4xl"
-                aria-hidden="true"
-              >
-                {product.icon}
-              </div>
+              {product.image ? (
+                <img
+                  src={product.image}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-14 w-14 rounded-lg object-cover lg:h-20 lg:w-20 lg:rounded-xl"
+                />
+              ) : (
+                <div
+                  className="flex h-14 w-14 items-center justify-center rounded-lg bg-accent/20 text-2xl lg:h-20 lg:w-20 lg:rounded-xl lg:text-4xl"
+                  aria-hidden="true"
+                >
+                  {product.icon}
+                </div>
+              )}
               <div className="mt-3 font-display text-lg lg:mt-4 lg:text-2xl">{product.name}</div>
               <div className="text-primary lg:text-lg">
                 {formatCentavosAsPesos(product.unitPriceCentavos)}
               </div>
+              {product.description && (
+                <p className="mt-1 text-xs text-ink/60 lg:text-sm">{product.description}</p>
+              )}
             </button>
           ))}
         </div>
