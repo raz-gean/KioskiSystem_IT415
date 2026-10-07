@@ -5,7 +5,13 @@ export default function SuccessScreen({ state, dispatch }) {
   const { transaction } = state;
   return (
     <div className="p-6 text-center">
-      <h1 className="font-display text-2xl text-success">Payment Successful</h1>
+      <div
+        className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-success text-3xl text-white"
+        aria-hidden="true"
+      >
+        ✓
+      </div>
+      <h1 className="mt-4 font-display text-2xl text-success">Payment Successful</h1>
       <p className="mt-2">Transaction completed successfully. Thank you!</p>
 
       <dl className="mx-auto mt-6 max-w-sm text-left">

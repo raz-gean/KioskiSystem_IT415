@@ -35,13 +35,22 @@ export default function ReceiptScreen({ state, dispatch }) {
         <p>Status: Payment Successful</p>
       </div>
 
-      <button
-        type="button"
-        onClick={() => dispatch({ type: 'RESET_TRANSACTION' })}
-        className="mx-auto mt-6 block rounded-lg bg-primary px-6 py-3 font-semibold text-white"
-      >
-        New Transaction
-      </button>
+      <div className="mx-auto mt-6 flex max-w-sm gap-4">
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="flex-1 rounded-lg border border-ink/20 py-3 font-semibold"
+        >
+          Print Receipt
+        </button>
+        <button
+          type="button"
+          onClick={() => dispatch({ type: 'RESET_TRANSACTION' })}
+          className="flex-1 rounded-lg bg-primary py-3 font-semibold text-white"
+        >
+          New Transaction
+        </button>
+      </div>
     </div>
   );
 }
