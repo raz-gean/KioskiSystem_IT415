@@ -7,7 +7,7 @@ describe('full kiosk transaction flow', () => {
     render(<App />);
 
     // Order step: add a Coffee
-    fireEvent.click(await screen.findByRole('button', { name: /coffee/i }));
+    fireEvent.click(await screen.findByRole('button', { name: /brewed coffee/i }));
     expect(screen.getAllByText(/₱45\.00/).length).toBeGreaterThan(0);
 
     // Proceed to Review
@@ -44,7 +44,7 @@ describe('full kiosk transaction flow', () => {
   it('rejects insufficient cash and keeps the user on the payment screen', async () => {
     render(<App />);
 
-    fireEvent.click(await screen.findByRole('button', { name: /sandwich/i })); // ₱50.00
+    fireEvent.click(await screen.findByRole('button', { name: /pancit/i })); // ₱75.00
     fireEvent.click(screen.getByRole('button', { name: /proceed to payment|continue/i }));
     fireEvent.click(screen.getByRole('button', { name: /continue to payment/i }));
     fireEvent.click(screen.getByRole('button', { name: /^cash$/i }));
