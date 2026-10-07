@@ -1,4 +1,5 @@
 import { formatCentavosAsPesos } from '../lib/money';
+import { getPaymentMethodLabel } from '../lib/paymentMethodLabel';
 
 export default function SuccessScreen({ state, dispatch }) {
   const { transaction } = state;
@@ -14,7 +15,7 @@ export default function SuccessScreen({ state, dispatch }) {
         </div>
         <div className="flex justify-between border-b border-ink/10 py-2">
           <dt>Payment method</dt>
-          <dd className="capitalize">{transaction.paymentMethod}</dd>
+          <dd>{getPaymentMethodLabel(transaction.paymentMethod)}</dd>
         </div>
         <div className="flex justify-between border-b border-ink/10 py-2">
           <dt>Transaction amount</dt>

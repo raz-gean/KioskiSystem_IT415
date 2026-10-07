@@ -1,5 +1,6 @@
 import { products } from '../data/products';
 import { sumCartCentavos } from '../lib/money';
+import { initialState } from './initialState';
 
 function findProduct(productId) {
   return products.find((product) => product.id === productId);
@@ -105,14 +106,7 @@ export function appReducer(state, action) {
     }
 
     case 'RESET_TRANSACTION':
-      return {
-        step: 'order',
-        cart: [],
-        paymentMethod: null,
-        cashAmountPaidCentavos: null,
-        cashError: null,
-        transaction: null,
-      };
+      return initialState;
 
     default:
       return state;
