@@ -25,15 +25,20 @@ describe('full kiosk transaction flow', () => {
     // Payment Successful screen
     expect(await screen.findByText(/payment successful/i)).toBeInTheDocument();
     expect(screen.getByText(/TXN-\d{8}-\d{6}/)).toBeInTheDocument();
+    expect(screen.getByText('QR Payment')).toBeInTheDocument();
 
     // View Receipt
     fireEvent.click(screen.getByRole('button', { name: /view receipt/i }));
     expect(screen.getByText(/coffee/i)).toBeInTheDocument();
+    expect(screen.getByText(/Payment method: QR Payment/i)).toBeInTheDocument();
     expect(screen.getByText(/₱0\.00/)).toBeInTheDocument(); // change for QR
 
     // New Transaction resets to an empty Order screen
     fireEvent.click(screen.getByRole('button', { name: /new transaction/i }));
     expect(screen.getByText(/cart is empty|0 items/i)).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent(
+      /new transaction started — previous order cleared/i
+    );
   });
 
   it('rejects insufficient cash and keeps the user on the payment screen', async () => {
