@@ -20,10 +20,12 @@ export default function StepTracker({ currentStep }) {
   return (
     <header className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-ink/10 bg-white px-4 py-3 sm:gap-6 sm:px-6 sm:py-4">
       <span className="flex items-center gap-2 font-display text-lg font-semibold sm:text-xl">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm text-white">
-          SB
-        </span>
-        <span className="hidden sm:inline">SizzlingBites</span>
+        <img
+          src="/imgs/Logo.jpg"
+          alt="SizzleBites logo"
+          className="h-8 w-8 shrink-0 rounded-lg object-cover"
+        />
+        <span className="hidden sm:inline">SizzleBites</span>
       </span>
       <nav className="flex flex-wrap gap-3 text-xs sm:gap-4 sm:text-sm">
         {STEPS.map(({ key, label }, index) => {

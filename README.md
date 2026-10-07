@@ -1,7 +1,7 @@
-# SizzlingBites POS Kiosk
+# SizzleBites POS Kiosk
 
 A touchscreen self-service Point-of-Sale kiosk for a fictional food and
-dessert outlet, SizzlingBites, built for the IT415 (Application Development
+dessert outlet, SizzleBites, built for the IT415 (Application Development
 and Emerging Technologies) practical exam.
 
 Customers tap products across five categories (Coffee, Soft Drinks, Cakes,
