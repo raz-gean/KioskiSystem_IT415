@@ -1,4 +1,5 @@
 import { formatCentavosAsPesos } from '../lib/money';
+import { getPaymentMethodLabel } from '../lib/paymentMethodLabel';
 
 export default function ReceiptScreen({ state, dispatch }) {
   const { transaction } = state;
@@ -28,7 +29,7 @@ export default function ReceiptScreen({ state, dispatch }) {
           <span>TOTAL</span>
           <span>{formatCentavosAsPesos(transaction.totalCentavos)}</span>
         </div>
-        <p className="mt-2">Payment method: {transaction.paymentMethod}</p>
+        <p className="mt-2">Payment method: {getPaymentMethodLabel(transaction.paymentMethod)}</p>
         <p>Amount paid: {formatCentavosAsPesos(transaction.amountPaidCentavos)}</p>
         <p>Change: {formatCentavosAsPesos(transaction.changeCentavos)}</p>
         <p>Status: Payment Successful</p>
