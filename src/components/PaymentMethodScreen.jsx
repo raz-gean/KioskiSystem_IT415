@@ -30,6 +30,13 @@ export default function PaymentMethodScreen({ state, dispatch }) {
           </button>
         ))}
       </div>
+      <button
+        type="button"
+        onClick={() => dispatch({ type: 'GO_TO_STEP', step: 'review' })}
+        className="mt-6 rounded-lg border border-ink/20 px-6 py-3"
+      >
+        Back
+      </button>
     </div>
   );
 }
