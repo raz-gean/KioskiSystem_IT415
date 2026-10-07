@@ -17,7 +17,7 @@ export default function App() {
       <StepTracker currentStep={state.step} />
       {state.step === 'order' && <OrderScreen state={state} dispatch={dispatch} />}
       {state.step === 'review' && <ReviewScreen state={state} dispatch={dispatch} />}
-      {state.step === 'payment-method' && <PaymentMethodScreen dispatch={dispatch} />}
+      {state.step === 'payment-method' && <PaymentMethodScreen state={state} dispatch={dispatch} />}
       {state.step === 'payment-processing' && (
         <PaymentProcessingScreen state={state} dispatch={dispatch} />
       )}
