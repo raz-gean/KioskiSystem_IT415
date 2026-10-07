@@ -7,32 +7,37 @@ export default function ReviewScreen({ state, dispatch }) {
   );
 
   return (
-    <div className="p-6">
-      <h1 className="font-display text-2xl">Review your order</h1>
-      <table className="mt-6 w-full text-left">
-        <thead>
-          <tr className="border-b border-ink/10 text-sm text-ink/60">
-            <th className="py-2">Product</th>
-            <th>Quantity</th>
-            <th>Unit price</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          {state.cart.map((line) => (
-            <tr key={line.productId} className="border-b border-ink/5">
-              <td className="py-2">{line.name}</td>
-              <td>{line.quantity}</td>
-              <td>{formatCentavosAsPesos(line.unitPriceCentavos)}</td>
-              <td>{formatCentavosAsPesos(line.unitPriceCentavos * line.quantity)}</td>
+    <div className="mx-auto max-w-2xl p-6 lg:max-w-3xl lg:p-10">
+      <h1 className="font-display text-2xl lg:text-3xl">Review your order</h1>
+      <div className="mt-6 overflow-hidden rounded-xl border border-ink/10 bg-white lg:rounded-2xl">
+        <table className="w-full text-left">
+          <thead>
+            <tr className="border-b border-ink/10 bg-bg/60 text-sm text-ink/60">
+              <th className="px-4 py-3">Product</th>
+              <th className="px-4 py-3">Quantity</th>
+              <th className="px-4 py-3">Unit price</th>
+              <th className="px-4 py-3">Subtotal</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div className="mt-4 flex items-center justify-between font-semibold">
-        <span>Total Amount</span>
-        <span>{formatCentavosAsPesos(totalCentavos)}</span>
+          </thead>
+          <tbody>
+            {state.cart.map((line) => (
+              <tr key={line.productId} className="border-b border-ink/5 last:border-0">
+                <td className="px-4 py-3">{line.name}</td>
+                <td className="px-4 py-3">{line.quantity}</td>
+                <td className="px-4 py-3">{formatCentavosAsPesos(line.unitPriceCentavos)}</td>
+                <td className="px-4 py-3">
+                  {formatCentavosAsPesos(line.unitPriceCentavos * line.quantity)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex items-center justify-between border-t border-ink/10 bg-bg/60 px-4 py-3 font-semibold">
+          <span>Total Amount</span>
+          <span className="font-display text-lg text-primary">
+            {formatCentavosAsPesos(totalCentavos)}
+          </span>
+        </div>
       </div>
 
       <div className="mt-6 flex gap-4">

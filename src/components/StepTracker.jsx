@@ -15,27 +15,36 @@ function stepGroup(step) {
 
 export default function StepTracker({ currentStep }) {
   const activeGroup = stepGroup(currentStep);
+  const activeIndex = STEPS.findIndex((step) => step.key === activeGroup);
+
   return (
-    <header className="flex items-center gap-6 border-b border-ink/10 px-6 py-4">
-      <span className="flex items-center gap-2 font-display text-xl font-semibold">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm text-white">
+    <header className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-ink/10 bg-white px-4 py-3 sm:gap-6 sm:px-6 sm:py-4">
+      <span className="flex items-center gap-2 font-display text-lg font-semibold sm:text-xl">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-sm text-white">
           SB
         </span>
-        SizzlingBites
+        <span className="hidden sm:inline">SizzlingBites</span>
       </span>
-      <nav className="flex gap-4 text-sm">
-        {STEPS.map(({ key, label }) => (
-          <span
-            key={key}
-            className={
-              key === activeGroup
-                ? 'border-b-2 border-primary pb-1 font-semibold text-primary'
-                : 'pb-1 text-ink/50'
-            }
-          >
-            {label}
-          </span>
-        ))}
+      <nav className="flex flex-wrap gap-3 text-xs sm:gap-4 sm:text-sm">
+        {STEPS.map(({ key, label }, index) => {
+          const isDone = index < activeIndex;
+          const isActive = key === activeGroup;
+          return (
+            <span
+              key={key}
+              className={
+                isActive
+                  ? 'whitespace-nowrap border-b-2 border-primary pb-1 font-semibold text-primary'
+                  : isDone
+                    ? 'whitespace-nowrap pb-1 text-success'
+                    : 'whitespace-nowrap pb-1 text-ink/50'
+              }
+            >
+              {isDone && <span aria-hidden="true">✓ </span>}
+              {label}
+            </span>
+          );
+        })}
       </nav>
     </header>
   );
