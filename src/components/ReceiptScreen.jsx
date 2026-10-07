@@ -14,8 +14,8 @@ export default function ReceiptScreen({ state, dispatch }) {
         <p>Transaction No. {transaction.id}</p>
         <p>Date {date.toLocaleString()}</p>
         <hr className="my-3 border-dashed border-ink/30" />
-        {transaction.items.map((item) => (
-          <div key={item.name} className="mb-2 flex justify-between">
+        {transaction.items.map((item, index) => (
+          <div key={`${item.name}-${index}`} className="mb-2 flex justify-between">
             <span>
               {item.name}
               <br />
