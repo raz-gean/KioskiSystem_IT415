@@ -27,6 +27,15 @@ export const products = [
     image: '/products/spanish-latte.jpg',
     description: 'A Filipino coffee-shop favorite made sweet and creamy with condensed milk.',
   },
+  {
+    id: 'cappuccino',
+    name: 'Cappuccino',
+    category: 'Coffee',
+    unitPriceCentavos: 9000,
+    icon: '☕',
+    image: '/products/expressocoffee.jpg',
+    description: 'Espresso with steamed milk and a thick layer of velvety foam.',
+  },
 
   // Soft Drinks
   {
@@ -52,7 +61,17 @@ export const products = [
     category: 'Soft Drinks',
     unitPriceCentavos: 2000,
     icon: '💧',
-    description: 'Cold, purified water.',
+    image: '/products/Purific-Bottledwater.jpg',
+    description: 'Ultra-pure mountain water, naturally sourced and carbon filtered.',
+  },
+  {
+    id: 'energy-soda',
+    name: 'Energy Soda',
+    category: 'Soft Drinks',
+    unitPriceCentavos: 4500,
+    icon: '⚡',
+    image: '/products/Stinger-soda.jpg',
+    description: 'Caffeinated lemon-lime soda with a sharp, fizzy buzz.',
   },
 
   // Cakes
@@ -140,5 +159,14 @@ export const products = [
     icon: '🍜',
     image: '/products/pancit-canton.jpg',
     description: 'Stir-fried noodles served at Filipino celebrations for long life.',
+  },
+  {
+    id: 'chicken-curry',
+    name: 'Chicken Curry',
+    category: 'Filipino Dishes',
+    unitPriceCentavos: 9800,
+    icon: '🍛',
+    image: '/products/chickencurry-filipinodish.jpg',
+    description: 'Chicken simmered in coconut milk with curry spices, potatoes, and carrots.',
   },
 ];
