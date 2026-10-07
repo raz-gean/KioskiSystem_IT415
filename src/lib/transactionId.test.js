@@ -17,4 +17,13 @@ describe('generateTransactionId', () => {
     const b = generateTransactionId(new Date(2026, 9, 7, 10, 42, 31));
     expect(a).not.toBe(b);
   });
+
+  it('produces different ids for two transactions in the same second', () => {
+    const sameInstant = new Date(2026, 9, 7, 10, 42, 30);
+    const a = generateTransactionId(sameInstant);
+    const b = generateTransactionId(sameInstant);
+    expect(a).not.toBe(b);
+    expect(a).toMatch(/^TXN-\d{8}-\d{6}$/);
+    expect(b).toMatch(/^TXN-\d{8}-\d{6}-\d{3}$/);
+  });
 });
