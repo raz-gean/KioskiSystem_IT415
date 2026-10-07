@@ -8,7 +8,7 @@ export default function ReceiptScreen({ state, dispatch }) {
   return (
     <div className="p-6">
       <div className="mx-auto max-w-sm border border-ink/10 bg-white p-6 font-mono text-sm">
-        <h1 className="text-center font-display text-lg">CAMPUS STORE POS</h1>
+        <h1 className="text-center font-display text-lg">SIZZLINGBITES POS</h1>
         <p className="text-center text-xs text-ink/60">Official Digital Receipt</p>
         <hr className="my-3 border-dashed border-ink/30" />
         <p>Transaction No. {transaction.id}</p>

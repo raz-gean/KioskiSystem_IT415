@@ -4,7 +4,7 @@ import App from '../App';
 
 function reachCash() {
   render(<App />);
-  fireEvent.click(screen.getByRole('button', { name: /^coffee/i }));
+  fireEvent.click(screen.getByRole('button', { name: /^brewed coffee/i }));
   fireEvent.click(screen.getByRole('button', { name: /proceed to payment/i }));
   fireEvent.click(screen.getByRole('button', { name: /continue to payment/i }));
   fireEvent.click(screen.getByRole('button', { name: /^cash$/i }));

@@ -1,26 +1,62 @@
+import { useState } from 'react';
 import { products } from '../data/products';
 import { formatCentavosAsPesos } from '../lib/money';
 
+const CATEGORIES = ['All', 'Coffee', 'Soft Drinks', 'Cakes', 'Pies', 'Filipino Dishes'];
+
 export default function OrderScreen({ state, dispatch }) {
+  const [activeCategory, setActiveCategory] = useState('All');
+
   const totalCentavos = state.cart.reduce(
     (sum, line) => sum + line.unitPriceCentavos * line.quantity,
     0
   );
 
+  const visibleProducts =
+    activeCategory === 'All'
+      ? products
+      : products.filter((product) => product.category === activeCategory);
+
   return (
     <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-[2fr_1fr]">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        {products.map((product) => (
-          <button
-            key={product.id}
-            type="button"
-            onClick={() => dispatch({ type: 'ADD_ITEM', productId: product.id })}
-            className="rounded-xl border border-ink/10 bg-white p-4 text-left shadow-sm"
-          >
-            <div className="font-display text-lg">{product.name}</div>
-            <div className="text-primary">{formatCentavosAsPesos(product.unitPriceCentavos)}</div>
-          </button>
-        ))}
+      <div>
+        <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+          {CATEGORIES.map((category) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => setActiveCategory(category)}
+              aria-pressed={activeCategory === category}
+              className={
+                activeCategory === category
+                  ? 'rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white'
+                  : 'rounded-full border border-ink/10 bg-white px-4 py-2 text-sm font-semibold text-ink/70'
+              }
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+          {visibleProducts.map((product) => (
+            <button
+              key={product.id}
+              type="button"
+              onClick={() => dispatch({ type: 'ADD_ITEM', productId: product.id })}
+              className="rounded-xl border border-ink/10 bg-white p-4 text-left shadow-sm transition active:scale-95 active:border-primary"
+            >
+              <div
+                className="flex h-14 w-14 items-center justify-center rounded-lg bg-accent/20 text-2xl"
+                aria-hidden="true"
+              >
+                {product.icon}
+              </div>
+              <div className="mt-3 font-display text-lg">{product.name}</div>
+              <div className="text-primary">{formatCentavosAsPesos(product.unitPriceCentavos)}</div>
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="rounded-xl border border-ink/10 bg-white p-4">

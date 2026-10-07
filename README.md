@@ -1,17 +1,19 @@
-# Campus Store POS Kiosk
+# SizzlingBites POS Kiosk
 
-A touchscreen self-service Point-of-Sale kiosk for a campus store, built for
-the IT415 (Application Development and Emerging Technologies) practical exam.
+A touchscreen self-service Point-of-Sale kiosk for a fictional food and
+dessert outlet, SizzlingBites, built for the IT415 (Application Development
+and Emerging Technologies) practical exam.
 
-Customers tap products to build an order, review it, choose a payment method
+Customers tap products across five categories (Coffee, Soft Drinks, Cakes,
+Pies, Filipino Dishes) to build an order, review it, choose a payment method
 (Cash, QR, or Credit/Debit Card), complete payment, and receive a digital
 receipt.
 
 ## Status
 
-Design complete, implementation not yet started. See
-`docs/superpowers/specs/2026-10-07-kiosk-pos-design.md` for the full design
-(stack, visual identity, screen-by-screen behavior, state shape).
+Fully implemented, tested, and submitted for the exam. See
+`docs/superpowers/specs/2026-10-07-kiosk-pos-design.md` for the original
+design (stack, visual identity, screen-by-screen behavior, state shape).
 
 ## Stack
 
@@ -21,7 +23,8 @@ Design complete, implementation not yet started. See
 
 ## Transaction flow
 
-1. **Order** — tap products, adjust quantities, see running total
+1. **Order** — filter by category, tap products, adjust quantities, see
+   running total
 2. **Review** — confirm the order before paying
 3. **Payment Method** — Cash, QR Payment, or Credit/Debit Card
 4. **Payment Processing** — validate and complete the selected payment
@@ -36,8 +39,17 @@ npm install
 npm run dev
 ```
 
-(Scaffolding not yet created — these commands will work once the Vite project
-is initialized.)
+Run the test suite:
+
+```bash
+npm run test
+```
+
+Build for production:
+
+```bash
+npm run build
+```
 
 ## Project docs
 
@@ -49,7 +61,7 @@ is initialized.)
 
 ## Group contributions
 
-Group of 3 — IT415.
+Group of 3 — IT415, BSIT-4C.
 
 | Member | GitHub |
 |---|---|
