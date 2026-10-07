@@ -1,4 +1,5 @@
 import { formatCentavosAsPesos } from '../lib/money';
+import { generateTransactionId } from '../lib/transactionId';
 
 export default function QrPaymentView({ state, dispatch }) {
   const totalCentavos = state.cart.reduce(
@@ -16,7 +17,13 @@ export default function QrPaymentView({ state, dispatch }) {
       </p>
       <button
         type="button"
-        onClick={() => dispatch({ type: 'COMPLETE_SIMULATED_PAYMENT' })}
+        onClick={() =>
+          dispatch({
+            type: 'COMPLETE_SIMULATED_PAYMENT',
+            transactionId: generateTransactionId(),
+            timestamp: new Date().toISOString(),
+          })
+        }
         className="mt-6 rounded-lg bg-primary px-6 py-3 font-semibold text-white"
       >
         Confirm Payment

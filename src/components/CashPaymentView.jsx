@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { formatCentavosAsPesos, pesosToCentavos } from '../lib/money';
+import { generateTransactionId } from '../lib/transactionId';
 
 export default function CashPaymentView({ state, dispatch }) {
   const [input, setInput] = useState('');
@@ -47,7 +48,13 @@ export default function CashPaymentView({ state, dispatch }) {
 
       <button
         type="button"
-        onClick={() => dispatch({ type: 'SUBMIT_CASH_PAYMENT' })}
+        onClick={() =>
+          dispatch({
+            type: 'SUBMIT_CASH_PAYMENT',
+            transactionId: generateTransactionId(),
+            timestamp: new Date().toISOString(),
+          })
+        }
         className="mt-6 w-full rounded-lg bg-primary py-3 font-semibold text-white"
       >
         Pay Now

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { appReducer } from './reducer';
 import { initialState } from './initialState';
+import { generateTransactionId } from '../lib/transactionId';
 
 function cartLine(state, productId) {
   return state.cart.find((line) => line.productId === productId);
@@ -88,7 +89,11 @@ describe('SUBMIT_CASH_PAYMENT', () => {
   it('accepts an exact payment with ₱0.00 change', () => {
     let state = stateWithCoffeeAndMethod();
     state = appReducer(state, { type: 'SET_CASH_AMOUNT', amountCentavos: 4500 });
-    state = appReducer(state, { type: 'SUBMIT_CASH_PAYMENT' });
+    state = appReducer(state, {
+      type: 'SUBMIT_CASH_PAYMENT',
+      transactionId: 'TXN-TEST-1',
+      timestamp: '2026-10-07T00:00:00.000Z',
+    });
     expect(state.transaction).not.toBeNull();
     expect(state.transaction.changeCentavos).toBe(0);
     expect(state.step).toBe('success');
@@ -97,7 +102,11 @@ describe('SUBMIT_CASH_PAYMENT', () => {
   it('accepts a payment above the total and computes correct change', () => {
     let state = stateWithCoffeeAndMethod();
     state = appReducer(state, { type: 'SET_CASH_AMOUNT', amountCentavos: 20000 });
-    state = appReducer(state, { type: 'SUBMIT_CASH_PAYMENT' });
+    state = appReducer(state, {
+      type: 'SUBMIT_CASH_PAYMENT',
+      transactionId: 'TXN-TEST-2',
+      timestamp: '2026-10-07T00:00:00.000Z',
+    });
     expect(state.transaction.changeCentavos).toBe(15500);
   });
 
@@ -114,7 +123,11 @@ describe('COMPLETE_SIMULATED_PAYMENT', () => {
   it('sets amountPaid equal to total and change to 0 for QR', () => {
     let state = appReducer(initialState, { type: 'ADD_ITEM', productId: 'sandwich' }); // 5000
     state = appReducer(state, { type: 'SELECT_PAYMENT_METHOD', method: 'qr' });
-    state = appReducer(state, { type: 'COMPLETE_SIMULATED_PAYMENT' });
+    state = appReducer(state, {
+      type: 'COMPLETE_SIMULATED_PAYMENT',
+      transactionId: 'TXN-TEST-3',
+      timestamp: '2026-10-07T00:00:00.000Z',
+    });
     expect(state.transaction.amountPaidCentavos).toBe(5000);
     expect(state.transaction.changeCentavos).toBe(0);
     expect(state.transaction.paymentMethod).toBe('qr');
@@ -123,7 +136,11 @@ describe('COMPLETE_SIMULATED_PAYMENT', () => {
   it('sets amountPaid equal to total and change to 0 for card', () => {
     let state = appReducer(initialState, { type: 'ADD_ITEM', productId: 'sandwich' });
     state = appReducer(state, { type: 'SELECT_PAYMENT_METHOD', method: 'card' });
-    state = appReducer(state, { type: 'COMPLETE_SIMULATED_PAYMENT' });
+    state = appReducer(state, {
+      type: 'COMPLETE_SIMULATED_PAYMENT',
+      transactionId: 'TXN-TEST-4',
+      timestamp: '2026-10-07T00:00:00.000Z',
+    });
     expect(state.transaction.changeCentavos).toBe(0);
     expect(state.transaction.paymentMethod).toBe('card');
   });
@@ -133,9 +150,30 @@ describe('RESET_TRANSACTION', () => {
   it('clears cart, payment method, cash amount, and transaction back to initial state', () => {
     let state = appReducer(initialState, { type: 'ADD_ITEM', productId: 'coffee' });
     state = appReducer(state, { type: 'SELECT_PAYMENT_METHOD', method: 'qr' });
-    state = appReducer(state, { type: 'COMPLETE_SIMULATED_PAYMENT' });
+    state = appReducer(state, {
+      type: 'COMPLETE_SIMULATED_PAYMENT',
+      transactionId: 'TXN-TEST-5',
+      timestamp: '2026-10-07T00:00:00.000Z',
+    });
     state = appReducer(state, { type: 'RESET_TRANSACTION' });
     expect(state).toEqual(initialState);
+  });
+});
+
+describe('reducer purity under double-invocation (React StrictMode)', () => {
+  it('produces the same transaction id when the same action is applied twice to the same state', () => {
+    let state = appReducer(initialState, { type: 'ADD_ITEM', productId: 'coffee' });
+    state = appReducer(state, { type: 'SELECT_PAYMENT_METHOD', method: 'qr' });
+
+    const action = {
+      type: 'COMPLETE_SIMULATED_PAYMENT',
+      transactionId: 'TXN-TEST-6',
+      timestamp: '2026-10-07T00:00:00.000Z',
+    };
+    const resultA = appReducer(state, action);
+    const resultB = appReducer(state, action);
+
+    expect(resultB.transaction.id).toBe(resultA.transaction.id);
   });
 });
 
@@ -143,11 +181,19 @@ describe('two sequential transactions', () => {
   it('produce distinct transaction ids', () => {
     let stateA = appReducer(initialState, { type: 'ADD_ITEM', productId: 'coffee' });
     stateA = appReducer(stateA, { type: 'SELECT_PAYMENT_METHOD', method: 'qr' });
-    stateA = appReducer(stateA, { type: 'COMPLETE_SIMULATED_PAYMENT' });
+    stateA = appReducer(stateA, {
+      type: 'COMPLETE_SIMULATED_PAYMENT',
+      transactionId: generateTransactionId(),
+      timestamp: new Date().toISOString(),
+    });
 
     let stateB = appReducer(initialState, { type: 'ADD_ITEM', productId: 'sandwich' });
     stateB = appReducer(stateB, { type: 'SELECT_PAYMENT_METHOD', method: 'card' });
-    stateB = appReducer(stateB, { type: 'COMPLETE_SIMULATED_PAYMENT' });
+    stateB = appReducer(stateB, {
+      type: 'COMPLETE_SIMULATED_PAYMENT',
+      transactionId: generateTransactionId(),
+      timestamp: new Date().toISOString(),
+    });
 
     expect(stateA.transaction.id).not.toBe(stateB.transaction.id);
   });

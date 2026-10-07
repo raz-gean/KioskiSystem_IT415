@@ -1,6 +1,5 @@
 import { products } from '../data/products';
 import { sumCartCentavos } from '../lib/money';
-import { generateTransactionId } from '../lib/transactionId';
 
 function findProduct(productId) {
   return products.find((product) => product.id === productId);
@@ -89,6 +88,8 @@ export function appReducer(state, action) {
         paymentMethod: 'cash',
         amountPaidCentavos,
         totalCentavos,
+        transactionId: action.transactionId,
+        timestamp: action.timestamp,
       });
     }
 
@@ -98,6 +99,8 @@ export function appReducer(state, action) {
         paymentMethod: state.paymentMethod,
         amountPaidCentavos: totalCentavos,
         totalCentavos,
+        transactionId: action.transactionId,
+        timestamp: action.timestamp,
       });
     }
 
@@ -120,9 +123,12 @@ function formatShort(centavos) {
   return `₱${(centavos / 100).toFixed(2)}`;
 }
 
-function completeTransaction(state, { paymentMethod, amountPaidCentavos, totalCentavos }) {
+function completeTransaction(
+  state,
+  { paymentMethod, amountPaidCentavos, totalCentavos, transactionId, timestamp }
+) {
   const transaction = {
-    id: generateTransactionId(),
+    id: transactionId,
     items: state.cart.map((line) => ({
       name: line.name,
       unitPriceCentavos: line.unitPriceCentavos,
@@ -133,7 +139,7 @@ function completeTransaction(state, { paymentMethod, amountPaidCentavos, totalCe
     paymentMethod,
     amountPaidCentavos,
     changeCentavos: amountPaidCentavos - totalCentavos,
-    timestamp: new Date().toISOString(),
+    timestamp,
   };
 
   return {

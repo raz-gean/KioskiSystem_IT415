@@ -1,4 +1,5 @@
 import { formatCentavosAsPesos } from '../lib/money';
+import { generateTransactionId } from '../lib/transactionId';
 
 export default function CardPaymentView({ state, dispatch }) {
   const totalCentavos = state.cart.reduce(
@@ -13,7 +14,13 @@ export default function CardPaymentView({ state, dispatch }) {
       <p className="mt-4 text-sm text-ink/60">Please tap, insert, or swipe your card.</p>
       <button
         type="button"
-        onClick={() => dispatch({ type: 'COMPLETE_SIMULATED_PAYMENT' })}
+        onClick={() =>
+          dispatch({
+            type: 'COMPLETE_SIMULATED_PAYMENT',
+            transactionId: generateTransactionId(),
+            timestamp: new Date().toISOString(),
+          })
+        }
         className="mt-6 rounded-lg bg-primary px-6 py-3 font-semibold text-white"
       >
         Process Payment
