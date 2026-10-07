@@ -7,9 +7,9 @@ export default function ReviewScreen({ state, dispatch }) {
   );
 
   return (
-    <div className="mx-auto max-w-2xl p-6">
-      <h1 className="font-display text-2xl">Review your order</h1>
-      <div className="mt-6 overflow-hidden rounded-xl border border-ink/10 bg-white">
+    <div className="mx-auto max-w-2xl p-6 lg:max-w-3xl lg:p-10">
+      <h1 className="font-display text-2xl lg:text-3xl">Review your order</h1>
+      <div className="mt-6 overflow-hidden rounded-xl border border-ink/10 bg-white lg:rounded-2xl">
         <table className="w-full text-left">
           <thead>
             <tr className="border-b border-ink/10 bg-bg/60 text-sm text-ink/60">

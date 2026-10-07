@@ -26,21 +26,23 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-bg text-ink">
+    <div className="flex min-h-screen flex-col bg-bg text-ink">
       <StepTracker currentStep={state.step} />
       {showResetMessage && (
         <p role="status" className="mx-auto mt-4 max-w-2xl rounded-lg bg-success/10 px-4 py-3 text-center text-success">
           New transaction started — previous order cleared
         </p>
       )}
-      {state.step === 'order' && <OrderScreen state={state} dispatch={dispatch} />}
-      {state.step === 'review' && <ReviewScreen state={state} dispatch={dispatch} />}
-      {state.step === 'payment-method' && <PaymentMethodScreen state={state} dispatch={dispatch} />}
-      {state.step === 'payment-processing' && (
-        <PaymentProcessingScreen state={state} dispatch={dispatch} />
-      )}
-      {state.step === 'success' && <SuccessScreen state={state} dispatch={dispatch} />}
-      {state.step === 'receipt' && <ReceiptScreen state={state} dispatch={handleDispatch} />}
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center">
+        {state.step === 'order' && <OrderScreen state={state} dispatch={dispatch} />}
+        {state.step === 'review' && <ReviewScreen state={state} dispatch={dispatch} />}
+        {state.step === 'payment-method' && <PaymentMethodScreen state={state} dispatch={dispatch} />}
+        {state.step === 'payment-processing' && (
+          <PaymentProcessingScreen state={state} dispatch={dispatch} />
+        )}
+        {state.step === 'success' && <SuccessScreen state={state} dispatch={dispatch} />}
+        {state.step === 'receipt' && <ReceiptScreen state={state} dispatch={handleDispatch} />}
+      </div>
     </div>
   );
 }
