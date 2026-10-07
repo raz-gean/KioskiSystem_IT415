@@ -17,7 +17,12 @@ export default function StepTracker({ currentStep }) {
   const activeGroup = stepGroup(currentStep);
   return (
     <header className="flex items-center gap-6 border-b border-ink/10 px-6 py-4">
-      <span className="font-display text-xl font-semibold">Campus Store</span>
+      <span className="flex items-center gap-2 font-display text-xl font-semibold">
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm text-white">
+          SB
+        </span>
+        SizzlingBites
+      </span>
       <nav className="flex gap-4 text-sm">
         {STEPS.map(({ key, label }) => (
           <span
