@@ -61,7 +61,7 @@ export function appReducer(state, action) {
       return { ...state, step: action.step };
 
     case 'SELECT_PAYMENT_METHOD':
-      return { ...state, paymentMethod: action.method, cashError: null };
+      return { ...state, paymentMethod: action.method, cashAmountPaidCentavos: null, cashError: null };
 
     case 'SET_CASH_AMOUNT':
       return { ...state, cashAmountPaidCentavos: action.amountCentavos, cashError: null };

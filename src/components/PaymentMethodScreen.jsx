@@ -1,4 +1,6 @@
-export default function PaymentMethodScreen({ dispatch }) {
+import { formatCentavosAsPesos, sumCartCentavos } from '../lib/money';
+
+export default function PaymentMethodScreen({ state, dispatch }) {
   const methods = [
     { key: 'cash', label: 'Cash' },
     { key: 'qr', label: 'QR Payment' },
@@ -13,6 +15,9 @@ export default function PaymentMethodScreen({ dispatch }) {
   return (
     <div className="p-6">
       <h1 className="font-display text-2xl">How would you like to pay?</h1>
+      <p className="mt-4 font-display text-3xl text-primary">
+        Amount due: {formatCentavosAsPesos(sumCartCentavos(state.cart))}
+      </p>
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {methods.map((method) => (
           <button
@@ -25,6 +30,13 @@ export default function PaymentMethodScreen({ dispatch }) {
           </button>
         ))}
       </div>
+      <button
+        type="button"
+        onClick={() => dispatch({ type: 'GO_TO_STEP', step: 'review' })}
+        className="mt-6 rounded-lg border border-ink/20 px-6 py-3"
+      >
+        Back
+      </button>
     </div>
   );
 }
